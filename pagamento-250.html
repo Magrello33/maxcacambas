@@ -8,8 +8,7 @@
     body { font-family: Arial, sans-serif; background: #f8f8f8; padding: 20px; text-align: center; }
     .card { background: #fff; padding: 30px; border-radius: 10px; max-width: 400px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
     .pix-code { word-break: break-all; background: #eee; padding: 15px; border-radius: 8px; margin: 20px 0; }
-    .btn { background: green; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
-    .pay-link { display: inline-block; margin-top: 10px; text-decoration: none; }
+    .btn { background: green; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -19,10 +18,9 @@
     <img src="qr-pix-250.png" alt="QR Code PIX" width="200">
     <p>Ou copie e cole a chave PIX:</p>
     <div class="pix-code" id="pixKey">
-      00020126660014br.gov.bcb.pix0114+55119374502740226Max Cacambas Cacamba Media5204000053039865406250.005802BR5925EMERSON DE OLIVEIRA SANTO6009SAO PAULO62580520SAN2025052811354009750300017br.gov.bcb.brcode01051.0.063044B72
+      00020126360014br.gov.bcb.pix0114+55119374502745204000053039865406250.005802BR5925EMERSON DE OLIVEIRA SANTO6009SAO PAULO62580520SAN2025052811582739950300017br.gov.bcb.brcode01051.0.063048C7A
     </div>
     <button class="btn" onclick="copyPix()">Copiar Chave PIX</button>
-    <a href="https://pix.bcb.gov.br/api/v1/qrcode/00020126660014br.gov.bcb.pix0114+55119374502740226Max%20Cacambas%20Cacamba%20Media5204000053039865406250.005802BR5925EMERSON%20DE%20OLIVEIRA%20SANTO6009SAO%20PAULO62580520SAN2025052811354009750300017br.gov.bcb.brcode01051.0.063044B72" class="btn pay-link" target="_blank">Pagar agora</a>
     <p><strong>MAX CAÇAMBAS</strong></p>
   </div>
 
